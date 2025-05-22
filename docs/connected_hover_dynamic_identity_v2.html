@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body,html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+  </style>
+</head>
+<body>
+  <div id="plot" style="width:100%; height:100%;"></div>
+  <script>
+    // 1. Data
+    var industries = [/* …your 50 names… */];
+    var rev        = [/* …your 50 revenue scores… */];
+    var risk       = [/* …your 50 risk scores… */];
 
+    // 2. Compute Δ = Risk – Revenue, 3 decimals
+    var delta = rev.map(function(r,i){ return (risk[i]-r).toFixed(3); });
+
+    // 3. Axis bounds
+    var minVal = Math.min.apply(null, rev.concat(risk));
+    var maxVal = Math.max.apply(null, rev.concat(risk));
+
+    // 4. Revenue trace (blue, reversed)
+    var trace1 = {
+      x: rev, y: rev, mode: 'markers',
+      marker: { size:8, color: rev, colorscale:'Blues', reversescale:true },
+      text: industries,
+      hoverinfo: 'text+x',
+      hovertemplate: '<b>%{text}</b><br>Revenue Score: %{x:.3f}<extra></extra>'
+    };
+
+    // 5. Risk trace (orange, with Δ)
+    var trace2 = {
+      x: rev, y: risk, mode: 'markers',
+      marker: { size:8, color: risk, colorscale:'Oranges' },
+      text: industries,
+      customdata: delta,
+      hoverinfo: 'text+y+customdata',
+      hovertemplate:
+        '<b>%{text}</b><br>' +
+        'Risk Score: %{y:.3f}<br>' +
+        '∆ to Revenue: %{customdata}' +
+        '<extra></extra>'
+    };
+
+    // 6. Identity line y=x
+    var baseShapes = [{
+      type: 'line',
+      x0: minVal, y0: minVal,
+      x1: maxVal, y1: maxVal,
+      line: { dash:'dash', color:'black', width:1 }
+    }];
+
+    var layout = {
+      xaxis: { title: 'Revenue Score' },
+      yaxis: { title: 'Risk Score' },
+      showlegend: false,
+      hovermode: 'closest',
+      shapes: baseShapes
+    };
+
+    // 7. Plot + hover connector
+    Plotly.newPlot('plot', [trace1, trace2], layout).then(function(plot) {
+      plot.on('plotly_hover', function(e) {
+        var i = e.points[0].pointNumber;
+        var hoverLine = {
+          type: 'line',
+          x0: rev[i], y0: rev[i],
+          x1: rev[i], y1: risk[i],
+          line: { dash:'dot', color:'grey', width:1 }
+        };
+        Plotly.relayout(plot, { shapes: baseShapes.concat([hoverLine]) });
+      });
+      plot.on('plotly_unhover', function() {
+        Plotly.relayout(plot, { shapes: baseShapes });
+      });
+    });
+  </script>
+</body>
+</html>
