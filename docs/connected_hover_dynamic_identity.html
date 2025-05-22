@@ -3,60 +3,78 @@
 <head>
   <meta charset="utf-8"/>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <style>body,html {margin:0;padding:0;height:100%;overflow:hidden;}</style>
+  <style>
+    body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+  </style>
 </head>
 <body>
-<div id="plot" style="width:100%;height:100%;"></div>
-<script>
-  var industries = ['Real Estate Activities', 'Human Health Activities', 'Scientific Research and Development', 'Construction of residential and non-residential buildings', 'Manufacture of Computer, Electronic and Optical Products', 'Computing infrastructure, data processing, hosting and other information service activities', 'Electricity, Gas, Steam and Air Conditioning Supply', 'Activities of Extraterritorial Organisations and Bodies', 'Computer Programming, consultancy and related activities', 'Telecommunication', 'Education', 'Programming broadcasting, news agency and other content distribution activities', 'Services to Buildings and Landscape Activities', 'Land Transport and Transport via Pipelines', 'Architectural and Engineering Activities', 'Financial Services Activities, Except Insurance and Pension Funding', 'Accommodation', 'Other Personal Service Activities', 'Food and beverage service activities', 'Libraries, Archives, Museums and Other Cultural Activities', 'Manufacture of Electrical Equipment', 'Legal and Accounting Activities', 'Advertising and Market Research', 'Manufacture of Other Transport Equipment', 'Activities of Membership Organisations', 'Office Administrative, Office Support and Other Business Support Activities', 'Sports Activities and Amusement and Recreation Activities', 'Employment Activities', 'Crop and Animal Production, Hunting', 'Retail Trade', 'Civil Engineering', 'Activities of Head Offices and Management Consultancy', 'Repair of Computers and Personal and Household Goods', 'Air Transport', 'Motion picture, video and television programme', 'Insurance, Reinsurance and Pension Funding', 'Creative, Arts and Entertainment Activities', 'Publishing activities', 'Travel Agency, Tour Operator and Other Reservation Services', 'Wholesale Trade', 'Rental and Leasing Activities', 'Residential Care Activities', 'Manufacture of Food Products', 'Public Administration and Defence; Compulsory Social Security', 'Security and Investigation Activities', 'Warehousing, Storage and Support Activities Transportation', 'Postal and Courier Services', 'Remediation and Other Waste Management', 'Printing and Reproduction of Recorded Media'];
-  var rev = [1.685263157895, 1.552631578947, 1.535263157895, 1.532631578947, 1.495263157895, 1.455263157895, 1.442631578947, 1.435263157895, 1.425263157895, 1.375263157895, 1.375263157895, 1.355263157895, 1.352631578947, 1.335263157895, 1.302631578947, 1.285263157895, 1.235263157895, 1.232631578947, 1.215263157895, 1.182631578947, 1.165263157895, 1.155263157895, 1.122631578947, 1.085263157895, 1.082631578947, 1.072631578947, 1.072631578947, 1.055263157895, 1.052631578947, 1.052631578947, 1.022631578947, 1.015263157895, 1.012631578947, 0.995263157895, 0.995263157895, 0.985263157895, 0.945263157895, 0.935263157895, 0.892631578947, 0.812631578947, 0.812631578947, 0.812631578947, 0.802631578947, 0.802631578947, 0.782631578947, 0.75, 0.72, 0.66, 0.445263157895];
-  var risk = [1.475263157895, 1.442631578947, 1.455263157895, 1.402631578947, 1.415263157895, 1.485263157895, 1.292631578947, 1.315263157895, 1.465263157895, 1.415263157895, 1.415263157895, 1.285263157895, 1.292631578947, 1.205263157895, 1.272631578947, 1.225263157895, 1.135263157895, 1.222631578947, 1.125263157895, 1.132631578947, 1.125263157895, 1.145263157895, 1.042631578947, 1.035263157895, 1.092631578947, 1.062631578947, 0.982631578947, 1.125263157895, 0.942631578947, 1.142631578947, 1.012631578947, 1.085263157895, 1.002631578947, 0.995263157895, 0.945263157895, 0.935263157895, 0.875263157895, 0.915263157895, 0.942631578947, 0.832631578947, 0.852631578947, 0.812631578947, 0.762631578947, 0.802631578947, 0.852631578947, 0.72, 0.77, 0.67, 0.445263157895];
+  <div id="plot" style="width:100%; height:100%;"></div>
+  <script>
+    // Data arrays
+    var industries = ["Real Estate Activities","Human Health Activities","Scientific Research and Development","Construction of residential and non-residential buildings","Manufacture of Computer, Electronic and Optical Products","Computing infrastructure, data processing, hosting and other information service activities","Electricity, Gas, Steam and Air Conditioning Supply","Activities of Extraterritorial Organisations and Bodies","Computer Programming, consultancy and related activities","Telecommunication","Education","Programming broadcasting, news agency and other content distribution activities","Services to Buildings and Landscape Activities","Land Transport and Transport via Pipelines","Architectural and Engineering Activities","Financial Services Activities, Except Insurance and Pension Funding","Accommodation","Other Personal Service Activities","Food and beverage service activities","Libraries, Archives, Museums and Other Cultural Activities","Manufacture of Electrical Equipment","Legal and Accounting Activities","Advertising and Market Research","Manufacture of Other Transport Equipment","Activities of Membership Organisations","Office Administrative, Office Support and Other Business Support Activities","Sports Activities and Amusement and Recreation Activities","Employment Activities","Crop and Animal Production, Hunting","Retail Trade","Civil Engineering","Activities of Head Offices and Management Consultancy","Repair of Computers and Personal and Household Goods","Air Transport","Motion picture, video and television programme","Insurance, Reinsurance and Pension Funding","Creative, Arts and Entertainment Activities","Publishing activities","Travel Agency, Tour Operator and Other Reservation Services","Wholesale Trade","Rental and Leasing Activities","Residential Care Activities","Manufacture of Food Products","Public Administration and Defence; Compulsory Social Security","Security and Investigation Activities","Warehousing, Storage and Support Activities Transportation","Postal and Courier Services","Remediation and Other Waste Management","Printing and Reproduction of Recorded Media"];
+    var rev = [1.685263157895,1.552631578947,1.535263157895,1.532631578947,1.495263157895,1.455263157895,1.442631578947,1.435263157895,1.425263157895,1.375263157895,1.375263157895,1.355263157895,1.352631578947,1.335263157895,1.302631578947,1.285263157895,1.235263157895,1.232631578947,1.215263157895,1.182631578947,1.165263157895,1.155263157895,1.122631578947,1.085263157895,1.082631578947,1.072631578947,1.072631578947,1.055263157895,1.052631578947,1.052631578947,1.022631578947,1.015263157895,1.012631578947,0.995263157895,0.995263157895,0.985263157895,0.945263157895,0.935263157895,0.892631578947,0.812631578947,0.812631578947,0.812631578947,0.802631578947,0.802631578947,0.782631578947,0.75,0.72,0.66,0.445263157895];
+    var risk = [1.475263157895,1.442631578947,1.455263157895,1.402631578947,1.415263157895,1.485263157895,1.292631578947,1.315263157895,1.465263157895,1.415263157895,1.415263157895,1.285263157895,1.292631578947,1.205263157895,1.272631578947,1.225263157895,1.135263157895,1.222631578947,1.125263157895,1.132631578947,1.125263157895,1.145263157895,1.042631578947,1.035263157895,1.092631578947,1.062631578947,0.982631578947,1.125263157895,0.942631578947,1.142631578947,1.012631578947,1.085263157895,1.002631578947,0.995263157895,0.945263157895,0.935263157895,0.875263157895,0.915263157895,0.942631578947,0.832631578947,0.852631578947,0.812631578947,0.762631578947,0.802631578947,0.852631578947,0.72,0.77,0.67,0.445263157895];
 
-  var trace1 = {
-    x: rev, y: rev, mode: 'markers',
-    marker: {size:8, color: rev, colorscale:'Blues', reversescale:true},
-    text: industries, hoverinfo: 'text+x',
-    hovertemplate: '<b>%{text}</b><br>Revenue Score: %{x:.3f}<extra></extra>'
-  };
-  var trace2 = {
-    x: rev, y: risk, mode: 'markers',
-    marker: {size:8, color: risk, colorscale:'Oranges'},
-    text: industries, hoverinfo: 'text+y',
-    hovertemplate: '<b>%{text}</b><br>Risk Score: %{y:.3f}<extra></extra>'
-  };
+    // Calculate delta = Risk - Revenue
+    var delta = rev.map(function(r, i) { 
+      return (risk[i] - r).toFixed(3); 
+    });
 
-  var baseShapes = [
-    // Identity line (line of equality)
-    {
+    // Determine axis bounds
+    var minVal = Math.min.apply(null, rev.concat(risk));
+    var maxVal = Math.max.apply(null, rev.concat(risk));
+
+    // Revenue trace (blue, reversed gradient)
+    var trace1 = {
+      x: rev, y: rev, mode: 'markers',
+      marker: { size: 8, color: rev, colorscale: 'Blues', reversescale: true },
+      text: industries,
+      hoverinfo: 'text+x',
+      hovertemplate: '<b>%{text}</b><br>Revenue Score: %{x:.3f}<extra></extra>'
+    };
+
+    // Risk trace (orange, shows delta to revenue)
+    var trace2 = {
+      x: rev, y: risk, mode: 'markers',
+      marker: { size: 8, color: risk, colorscale: 'Oranges' },
+      text: industries,
+      customdata: delta,
+      hoverinfo: 'text+y+customdata',
+      hovertemplate: '<b>%{text}</b><br>Risk Score: %{y:.3f}<br>∆ to Revenue: %{customdata}<extra></extra>'
+    };
+
+    // Identity (y=x) line
+    var baseShapes = [{
       type: 'line',
-      x0: 0.445263157895, y0: 0.445263157895,
-      x1: 1.685263157895, y1: 1.685263157895,
-      line: {dash:'dash',color:'black',width:1}
-    }
-  ];
+      x0: minVal, y0: minVal,
+      x1: maxVal, y1: maxVal,
+      line: { dash: 'dash', color: 'black', width: 1 }
+    }];
 
-  var layout = {
-    xaxis: {title:'Revenue Score'},
-    yaxis: {title:'Risk Score'},
-    showlegend:false,
-    hovermode: 'closest',
-    shapes: baseShapes
-  };
+    var layout = {
+      xaxis: { title: 'Revenue Score' },
+      yaxis: { title: 'Risk Score' },
+      showlegend: false,
+      hovermode: 'closest',
+      shapes: baseShapes
+    };
 
-  Plotly.newPlot('plot', [trace1, trace2], layout).then(function(plot){
-    plot.on('plotly_hover', function(e){
-      var idx = e.points[0].pointNumber;
-      var x0 = rev[idx], y0 = rev[idx], x1 = rev[idx], y1 = risk[idx];
-      var newShape = {
-        type:'line', x0:x0, x1:x1, y0:y0, y1:y1,
-        line: {dash:'dot',color:'grey',width:1}
-      };
-      Plotly.relayout(plot, {shapes: baseShapes.concat([newShape])});
+    // Render plot and add hover connector
+    Plotly.newPlot('plot', [trace1, trace2], layout).then(function(plot) {
+      plot.on('plotly_hover', function(e) {
+        var i = e.points[0].pointNumber;
+        var x0 = rev[i], y0 = rev[i], x1 = rev[i], y1 = risk[i];
+        var hoverLine = {
+          type: 'line',
+          x0: x0, y0: y0, x1: x1, y1: y1,
+          line: { dash: 'dot', color: 'grey', width: 1 }
+        };
+        Plotly.relayout(plot, { shapes: baseShapes.concat([hoverLine]) });
+      });
+      plot.on('plotly_unhover', function() {
+        Plotly.relayout(plot, { shapes: baseShapes });
+      });
     });
-    plot.on('plotly_unhover', function(e){
-      Plotly.relayout(plot, {shapes: baseShapes});
-    });
-  });
-</script>
+  </script>
 </body>
 </html>
